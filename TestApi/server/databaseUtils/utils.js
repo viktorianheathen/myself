@@ -46,9 +46,14 @@ export function registerUser(data) {
         avatar: data.avatar || null
     });
     return user.save()
-
+}
+export function updateUser(id, body) {
+    return User.findByIdAndUpdate({_id: id }, body);
 }
 export function getUsers() {
     return User.find();
+}
+export function getUserOne(id) {
+    return User.findOne(id);
 }
 /* =========== //// Added user =========== */

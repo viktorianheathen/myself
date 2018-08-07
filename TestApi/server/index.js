@@ -157,8 +157,26 @@ app.get('/users', verifyToken, function(req, res){
 })
 
 /* ==== Get one user ==== */
-app.get('/users/:id', function(req, res){
-    res.send(req.params.id)
+app.get('/users/:id', verifyToken, function(req, res){
+    jwt.verify(req.token, 'sercet_key', function(err, data) {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            db.getUserOne(req.params.id).then(data => res.json(data))
+        }
+    })
+
+})
+
+/* ==== Get one user ==== */
+app.put('/users/:id', verifyToken, function(req, res){
+    jwt.verify(req.token, 'sercet_key', function(err, data) {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            db.updateUser(req.params.id, req.body).then(data => res.json(data))
+        }
+    })
 })
 
 /* ==== Register api ==== */
